@@ -299,8 +299,9 @@ def main_worker(gpu, ngpus_per_node, argss):
         )
         val_data.prepare_test_data()
 
-    dist.barrier()
-    val_data.prepare_test_data()
+    if args.distributed:
+        dist.barrier()
+        val_data.prepare_test_data()
 
     if args.distributed:
         val_sampler = torch.utils.data.distributed.DistributedSampler(val_data)
