@@ -1,6 +1,6 @@
 # [CVPR 2024] Rethinking Few-shot 3D Point Cloud Semantic Segmentation
 
-*Zhaochong An, Guolei Sun, Yun Liu, Fayao Liu, Zongwei Wu, Dan Wang, Luc Van Gool, Serge Belongie*
+*Zhaochong An, Guolei Sun<sup>†</sup>, Yun Liu<sup>†</sup>, Fayao Liu, Zongwei Wu, Dan Wang, Luc Van Gool, Serge Belongie*
 
 Welcome to the official PyTorch implementation repository of our paper [**Rethinking Few-shot 3D Point Cloud Semantic Segmentation**](https://arxiv.org/abs/2403.00592), accepted to CVPR 2024. [\[arXiv\]](https://arxiv.org/abs/2403.00592)
 
