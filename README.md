@@ -52,7 +52,17 @@ python3 setup.py install
 
 ## Datasets Preparation
 
-### S3DIS
+You can either directly download the preprocessed dataset directly from the links provided below or perform the preprocessing steps on your own.
+
+### Preprocessed Datasets
+| Dataset | Download |
+| ------------------ | -------| 
+| S3DIS | [Download link](https://drive.google.com/file/d/1faJYS_sulGWdLg-Qlst9oGVKfOxZos4m/view?usp=drive_link) |
+| ScanNet | [Download link](https://drive.google.com/file/d/1mUoITu4_bkucNA-Gl_Y84j0YxD93pHK0/view?usp=drive_link) |
+
+### Preprocessing Instructions
+
+**S3DIS**
 1. **Download**: [S3DIS Dataset Version 1.2](http://buildingparser.stanford.edu/dataset.html).
 2. **Preprocessing**: Re-organize raw data into `npy` files:
    ```bash
@@ -66,7 +76,7 @@ python3 setup.py install
     ```
 
 
-### ScanNet
+**ScanNet**
 1. **Download**: [ScanNet V2](http://www.scan-net.org/).
 2. **Preprocessing**: Re-organize raw data into `npy` files:
 	```bash
