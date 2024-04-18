@@ -237,7 +237,7 @@ class COSeg(nn.Module):
         (
             support_feat,  # N_s, C
             support_x_low,  # N_s, 3
-            support_offset,
+            support_offset_low,
             support_y_low,  # N_s
             _,
             support_base_y,  # N_s
@@ -246,17 +246,19 @@ class COSeg(nn.Module):
         )
         assert support_y_low.shape[0] == support_x_low.shape[0]
         # split support features and coords into list according to offset
-        support_offset = support_offset[:-1].long().cpu()
-        support_feat = torch.tensor_split(support_feat, support_offset)
-        support_x_low = torch.tensor_split(support_x_low, support_offset)
+        support_offset_low = support_offset_low[:-1].long().cpu()
+        support_feat = torch.tensor_split(support_feat, support_offset_low)
+        support_x_low = torch.tensor_split(support_x_low, support_offset_low)
         if support_base_y is not None:
-            support_base_y = torch.tensor_split(support_base_y, support_offset)
+            support_base_y = torch.tensor_split(
+                support_base_y, support_offset_low
+            )
 
         # get prototypes
         fg_mask = support_y_low
         bg_mask = torch.logical_not(support_y_low)
-        fg_mask = torch.tensor_split(fg_mask, support_offset)
-        bg_mask = torch.tensor_split(bg_mask, support_offset)
+        fg_mask = torch.tensor_split(fg_mask, support_offset_low)
+        bg_mask = torch.tensor_split(bg_mask, support_offset_low)
 
         # For k_shot, extract N_pt/k_shot per shot
         fg_prototypes = self.getPrototypes(
@@ -616,11 +618,12 @@ class COSeg(nn.Module):
         query_x_splits = torch.tensor_split(query_x, query_offset_cpu)
         query_y_splits = torch.tensor_split(query_y, query_offset_cpu)
         vis_pred = torch.tensor_split(final_pred, query_offset_cpu, dim=-1)
-        vis_mask = torch.tensor_split(support_y, support_offset)
+        support_offset_cpu = support_offset[:-1].long().cpu()
+        vis_mask = torch.tensor_split(support_y, support_offset_cpu)
 
         sp_nps, sp_fgs = [], []
         for i, support_x_split in enumerate(
-            torch.tensor_split(support_x, support_offset)
+            torch.tensor_split(support_x, support_offset_cpu)
         ):
             sp_np = (
                 support_x_split.detach().cpu().numpy()
