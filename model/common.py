@@ -204,7 +204,7 @@ class ClassTransformerLayer(nn.Module):
             torch.tensor([[1.0], [0.0]]).reshape_as(self.base_merge.weight)
         )
 
-    def forward(self, x, base_pred, guidance):
+    def forward(self, x, base_pred, guidance=None):
         """
         Arguments:
             x: B, C, T, N
@@ -266,7 +266,7 @@ class SpatialTransformerLayer(nn.Module):
         self.norm1 = nn.LayerNorm(hidden_dim)
         self.norm2 = nn.LayerNorm(hidden_dim)
 
-    def forward(self, x, guidance):
+    def forward(self, x, guidance=None):
         """
         Arguments:
             x: B, C, T, N
@@ -293,35 +293,32 @@ class AggregatorLayer(nn.Module):
     def __init__(
         self,
         hidden_dim=64,
-        text_guidance_dim=512,
-        appearance_guidance=512,
+        guidance_dim=512,
         nheads=4,
         attention_type="linear",
     ) -> None:
         super().__init__()
         self.spatial_attention = SpatialTransformerLayer(
             hidden_dim,
-            appearance_guidance,
+            guidance_dim,
             nheads=nheads,
             attention_type=attention_type,
         )
 
         self.class_attention = ClassTransformerLayer(
             hidden_dim,
-            text_guidance_dim,
+            guidance_dim,
             nheads=nheads,
             attention_type=attention_type,
         )
 
-    def forward(
-        self, x, basept_guidance, appearance_guidance=None, text_guidance=None
-    ):
+    def forward(self, x, basept_guidance):
         """
         Arguments:
             x: B C T N
         """
-        x = self.spatial_attention(x, appearance_guidance)
-        x = self.class_attention(x, basept_guidance, text_guidance)
+        x = self.spatial_attention(x)
+        x = self.class_attention(x, basept_guidance)
         return x
 
 

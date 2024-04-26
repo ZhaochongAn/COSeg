@@ -157,8 +157,7 @@ class COSeg(nn.Module):
             [
                 AggregatorLayer(
                     hidden_dim=self.feat_dim,
-                    text_guidance_dim=0,
-                    appearance_guidance=0,
+                    guidance_dim=0,
                     nheads=4,
                     attention_type="linear",
                 )
