@@ -7,7 +7,7 @@ Welcome to the official PyTorch implementation repository of our paper [**Rethin
 
 # Highlight 
 
-### The first thing we want you to be aware from our paper: 
+### The first thing we want you to be aware from this paper: 
 <p align="center"><i>please ensure you are using our <strong>corrected setting</strong> for the development and evaluation of your 3D few-shot models</i>.</p>
 
 ---
