@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-from einops import rearrange, repeat
+from einops import rearrange
 
 from torch_points3d.core.common_modules import FastBatchNorm1d
 from torch_points3d.modules.KPConv.kernels import KPConvLayer
@@ -147,22 +147,13 @@ class AttentionLayer(nn.Module):
         else:
             raise NotImplementedError
 
-    def forward(self, x, guidance):
+    def forward(self, x):
         """
         Arguments:
             x: B, L, C
-            guidance: B, L, C
         """
-        q = (
-            self.q(torch.cat([x, guidance], dim=-1))
-            if guidance is not None
-            else self.q(x)
-        )
-        k = (
-            self.k(torch.cat([x, guidance], dim=-1))
-            if guidance is not None
-            else self.k(x)
-        )
+        q = self.q(x)
+        k = self.k(x)
         v = self.v(x)
 
         q = rearrange(q, "B L (H D) -> B L H D", H=self.nheads)
@@ -204,11 +195,10 @@ class ClassTransformerLayer(nn.Module):
             torch.tensor([[1.0], [0.0]]).reshape_as(self.base_merge.weight)
         )
 
-    def forward(self, x, base_pred, guidance=None):
+    def forward(self, x, base_pred):
         """
         Arguments:
             x: B, C, T, N
-            guidance: B, T, C
             base_pred: N, 1
         """
         B, _, _, N = x.size()
@@ -230,10 +220,7 @@ class ClassTransformerLayer(nn.Module):
                 )
             )  # N, 2, C
 
-        if guidance is not None:
-            guidance = repeat(guidance, "B T C -> (B N) T C", N=N)
-
-        x_pool = x_pool + self.attention(self.norm1(x_pool), guidance)
+        x_pool = x_pool + self.attention(self.norm1(x_pool))
         x_pool = x_pool + self.MLP(self.norm2(x_pool))
 
         x_pool = rearrange(x_pool, "(B N) T C -> B C T N", N=N)
@@ -266,21 +253,16 @@ class SpatialTransformerLayer(nn.Module):
         self.norm1 = nn.LayerNorm(hidden_dim)
         self.norm2 = nn.LayerNorm(hidden_dim)
 
-    def forward(self, x, guidance=None):
+    def forward(self, x):
         """
         Arguments:
             x: B, C, T, N
-            guidance: B, N, C
         """
         B, _, T, N = x.size()
 
         x_pool = rearrange(x, "B C T N -> (B T) N C")
-        if guidance is not None:
-            guidance = repeat(guidance, "B N C -> (B T) N C", T=T)
 
-        x_pool = x_pool + self.attention(
-            self.norm1(x_pool), guidance
-        )  # Attention
+        x_pool = x_pool + self.attention(self.norm1(x_pool))  # Attention
         x_pool = x_pool + self.MLP(self.norm2(x_pool))  # MLP
 
         x_pool = rearrange(x_pool, "(B T) N C -> B C T N", T=T)
