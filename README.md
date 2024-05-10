@@ -97,6 +97,28 @@ You can either directly download the preprocessed dataset directly from the link
 
 After preprocessing the datasets, a folder named `blocks_bs1_s1` will be generated under `PATH_to_DATASET_processed_data`. Make sure to update the `data_root` entry in the .yaml config file to `[PATH_to_DATASET_processed_data]/blocks_bs1_s1/data`.
 
+## Model weights
+We provide the trained model weights across different few-shot settings and datasets below. 
+Please note that these weights have been retrained by us, which may have slight differences from reported results.
+You could directly load these weights for evaluation or train your own models following the training instructions.
+| Model name         | Dataset| CVFOLD | N-way K-shot | Model Weight |
+| ------------------ | -------| ------|-----|----------------------------------- |
+| **s30_1w1s**       | S3DIS  | 0 | 1-way 1-shot | [Download link](https://drive.google.com/drive/u/1/folders/1AZN1yqXL6gJSDa3dEw9i2fKHFDq3WOHQ)          |
+| **s30_1w5s**       | S3DIS  | 0 | 1-way 5-shot |[Download link](https://drive.google.com/drive/u/1/folders/1mYOTxutWTnMtSj8DmfG62WRZZHC3wkNA)     |
+| **s30_2w1s**       | S3DIS| 0 | 2-way 1-shot | [Download link](https://drive.google.com/drive/u/1/folders/18i4dzazWJQiv1NwsaaEpBNdReILjargm)      |
+| **s30_2w5s**       | S3DIS| 0 | 2-way 5-shot | [Download link](https://drive.google.com/drive/u/1/folders/1hW6E7TeB254AqPW9pNCs4GiFiEO6Ayyy)      |
+| **s31_1w1s**       | S3DIS  | 1 | 1-way 1-shot | [Download link](https://drive.google.com/drive/u/1/folders/1goxoSOizSlHvtXFLCB2YkKOIGdUG5fy3)          |
+| **s31_1w5s**       | S3DIS  | 1 | 1-way 5-shot |[Download link](https://drive.google.com/drive/u/1/folders/1dan3IFUl_onDIvcV8yYMHc9lXY8vovTE)     |
+| **s31_2w1s**       | S3DIS| 1 | 2-way 1-shot | [Download link](https://drive.google.com/drive/u/1/folders/1UTbKNQhW2Fi_naEpTNAZMEzybjASfjkz)      |
+| **s31_2w5s**       | S3DIS| 1 | 2-way 5-shot | [Download link](https://drive.google.com/drive/u/1/folders/173a8C99nl885DmNhMcQzE_YiNwCJoaPW)      |
+| **sc0_1w1s**       | ScanNet  | 0 | 1-way 1-shot | [Download link](https://drive.google.com/drive/u/1/folders/1NS580I5xFEeq57tg1FqiQ7qy9eFTpIRP)          |
+| **sc0_1w5s**       | ScanNet  | 0 | 1-way 5-shot |[Download link](https://drive.google.com/drive/u/1/folders/10-e7mtWF0jSeOQgvfgLiuNvrj9jE-lqZ)     |
+| **sc0_2w1s**       | ScanNet| 0 | 2-way 1-shot | [Download link](https://drive.google.com/drive/u/1/folders/1-NigOn99yizUjuufzZgOM89hzDsffXAY)      |
+| **sc0_2w5s**       | ScanNet| 0 | 2-way 5-shot | [Download link](https://drive.google.com/drive/u/1/folders/1-mRzqoHr-74XW17rFwXR3lSJwVgRJUO6)      |
+| **sc1_1w1s**       | ScanNet  | 1 | 1-way 1-shot | [Download link](https://drive.google.com/drive/u/1/folders/1bxanSUbkWsgPSVnXW_Ce5gn_Ci3kkI6j)          |
+| **sc1_1w5s**       | ScanNet  | 1 | 1-way 5-shot |[Download link](https://drive.google.com/drive/u/1/folders/1KpBmSkMt7-6V5JfOOF09kW8G-ibazYdj)     |
+| **sc1_2w1s**       | ScanNet| 1 | 2-way 1-shot | [Download link](https://drive.google.com/drive/u/1/folders/1YVjJ6MnbN9HWnKTD6RJo89PH_BmXevB8)      |
+| **sc1_2w5s**       | ScanNet| 1 | 2-way 5-shot | [Download link](https://drive.google.com/drive/u/1/folders/1afw6iAY8Q_R2uZiijbw4xvZALtrKm61f)      |
 
 ## Backbone pretraining
 To begin, you will need to pretrain the backbone either on the S3DIS or ScanNet dataset. For consistency and ease of reproduction, we highly recommend using our pretrained backbone weights directly. You can find the pretrained weights and their corresponding download links below:
