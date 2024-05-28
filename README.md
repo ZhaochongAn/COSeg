@@ -28,6 +28,7 @@ Welcome to the official PyTorch implementation repository of our paper [**Rethin
 # Get Started
 
 ## Environment
+The following environment setup instructions have been tested on RTX 3090 GPUs.
 
 1. **Install dependencies**
 
@@ -99,6 +100,7 @@ After preprocessing the datasets, a folder named `blocks_bs1_s1` will be generat
 
 ## Model weights
 We provide the trained model weights across different few-shot settings and datasets below. 
+The training and testing are using 4 RTX 3090 GPUs.
 Please note that these weights have been retrained by us, which may have slight differences from reported results.
 You could directly load these weights for evaluation or train your own models following the training instructions.
 | Model name         | Dataset| CVFOLD | N-way K-shot | Model Weight |
