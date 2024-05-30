@@ -28,7 +28,7 @@ Welcome to the official PyTorch implementation repository of our paper [**Rethin
 # Get Started
 
 ## Environment
-The following environment setup instructions have been tested on RTX 3090 GPUs.
+The following environment setup instructions have been tested on RTX 3090 GPUs with GCC 6.3.0.
 
 1. **Install dependencies**
 
