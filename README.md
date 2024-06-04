@@ -63,7 +63,7 @@ You can either directly download the preprocessed dataset directly from the link
 
 ### Preprocessed Datasets
 | Dataset | Download |
-| ------------------ | -------| 
+| ------------------ | -------|
 | S3DIS | [Download link](https://drive.google.com/file/d/1faJYS_sulGWdLg-Qlst9oGVKfOxZos4m/view?usp=drive_link) |
 | ScanNet | [Download link](https://drive.google.com/file/d/1mUoITu4_bkucNA-Gl_Y84j0YxD93pHK0/view?usp=drive_link) |
 
@@ -179,3 +179,7 @@ If you find this project useful, please consider giving a star :star: and citati
 For any questions or issues, feel free to reach out!
 
 **Zhaochong An**: anzhaochong@outlook.com
+
+**Communication Group**:
+
+<img src="https://files.mdnice.com/user/67517/beb4a4b8-e556-4532-b739-979b423975bf.png" width="200"/>
