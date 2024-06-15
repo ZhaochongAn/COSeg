@@ -182,4 +182,4 @@ For any questions or issues, feel free to reach out!
 
 **Communication Group**:
 
-<img src="https://files.mdnice.com/user/67517/beb4a4b8-e556-4532-b739-979b423975bf.png" width="200"/>
+<img src="https://files.mdnice.com/user/67517/069d30e1-099b-40aa-ba7f-201f52e6389f.jpeg" width="200"/>
