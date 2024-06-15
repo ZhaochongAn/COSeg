@@ -180,6 +180,6 @@ For any questions or issues, feel free to reach out!
 
 **Zhaochong An**: anzhaochong@outlook.com
 
-**Communication Group**:
+**Communication Group (WeChat)**:
 
 <img src="https://files.mdnice.com/user/67517/069d30e1-099b-40aa-ba7f-201f52e6389f.jpeg" width="200"/>
