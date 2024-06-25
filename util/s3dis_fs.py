@@ -7,6 +7,7 @@ from torch.utils.data import Dataset
 import pickle
 import glob
 from itertools import combinations
+from itertools import permutations
 from util.data_util import data_prepare_v101 as data_prepare
 
 
@@ -452,6 +453,176 @@ class S3DIS_FS(S3DIS_base):
 
     def __len__(self):
         return self.num_episode
+
+
+class S3DIS_FSForVIS(S3DIS_FS):
+    """
+    The S3DIS dataset class used for visulizaling the few-shot results.
+    """
+
+    def __init__(
+        self,
+        split="train",
+        data_root="trainval",
+        voxel_size=0.04,
+        voxel_max=None,
+        transform=None,
+        shuffle_index=False,
+        loop=1,
+        cvfold=0,
+        num_episode=50000,
+        n_way=1,
+        k_shot=2,
+        n_queries=1,
+        target_class=None,
+    ):
+        super().__init__(
+            split,
+            data_root,
+            voxel_size,
+            voxel_max,
+            transform,
+            shuffle_index,
+            loop,
+            cvfold,
+            num_episode,
+            n_way,
+            k_shot,
+            n_queries,
+        )
+
+        self.target_class = target_class
+        self.target_cls = self.type2class[self.target_class]
+        self.combos = list(permutations(self.class2scans[self.target_cls], 2))
+
+    def __getitem__(self, idx, n_way_classes=None):
+        """Generate a test episode without base lables."""
+        support_ptclouds, support_masks, query_ptclouds, query_labels = (
+            [],
+            [],
+            [],
+            [],
+        )
+
+        selected_scannames = self.combos[idx]
+        query_scannames = selected_scannames[: self.n_queries]
+        support_scannames = selected_scannames[self.n_queries :]
+
+        for scan_name in query_scannames:
+            ptcloud, label = self.sample_test_pointcloud(
+                scan_name, [self.target_cls], self.target_cls, support=False
+            )
+            query_ptclouds.append(ptcloud)
+            query_labels.append(label)
+
+        for scan_name in support_scannames:
+            ptcloud, label = self.sample_test_pointcloud(
+                scan_name, [self.target_cls], self.target_cls, support=True
+            )
+            support_ptclouds.append(ptcloud)
+            support_masks.append(label)
+
+        return (
+            support_ptclouds,
+            support_masks,
+            query_ptclouds,
+            query_labels,
+            np.array([self.target_cls]),
+            selected_scannames,
+        )
+
+    def crop_point_cloud(self, point_cloud, feat, labels):
+        # Count the number of points with label 1 in each half of x and y directions
+        half_x = (point_cloud[:, 0].min() + point_cloud[:, 0].max()) / 2
+        half_y = (point_cloud[:, 1].min() + point_cloud[:, 1].max()) / 2
+
+        # Count points with label 1 in each quadrant
+        q1_count = np.sum(
+            (point_cloud[:, 0] <= half_x) & (labels == self.target_cls)
+        )
+        q2_count = np.sum(
+            (point_cloud[:, 0] > half_x) & (labels == self.target_cls)
+        )
+        q3_count = np.sum(
+            (point_cloud[:, 1] > half_y) & (labels == self.target_cls)
+        )
+        q4_count = np.sum(
+            (point_cloud[:, 1] <= half_y) & (labels == self.target_cls)
+        )
+
+        # Choose the quadrant with the most points of label 1
+        max_count = max(q1_count, q2_count, q3_count, q4_count)
+        if max_count == q1_count:
+            return (
+                point_cloud[(point_cloud[:, 0] <= half_x)],
+                feat[(point_cloud[:, 0] <= half_x)],
+                labels[(point_cloud[:, 0] <= half_x)],
+            )
+        elif max_count == q2_count:
+            return (
+                point_cloud[(point_cloud[:, 0] > half_x)],
+                feat[(point_cloud[:, 0] > half_x)],
+                labels[(point_cloud[:, 0] > half_x)],
+            )
+        elif max_count == q3_count:
+            return (
+                point_cloud[(point_cloud[:, 1] > half_y)],
+                feat[(point_cloud[:, 1] > half_y)],
+                labels[(point_cloud[:, 1] > half_y)],
+            )
+        else:
+            return (
+                point_cloud[(point_cloud[:, 1] <= half_y)],
+                feat[(point_cloud[:, 1] <= half_y)],
+                labels[(point_cloud[:, 1] <= half_y)],
+            )
+
+    def sample_test_pointcloud(
+        self, scan_name, sampled_classes, sampled_class, support
+    ):
+        data = np.load(os.path.join(self.data_root, scan_name + ".npy"))
+
+        coord, feat, label = data[:, 0:3], data[:, 3:6], data[:, 6]
+
+        # do some crops to avoid OOM
+        if support:
+            while coord.shape[0] > 300000:
+                print("Crop point cloud:", coord.shape[0])
+                coord, feat, label = self.crop_point_cloud(coord, feat, label)
+        else:
+            while coord.shape[0] > 700000:
+                print("Crop point cloud:", coord.shape[0])
+                coord, feat, label = self.crop_point_cloud(coord, feat, label)
+
+        coord, feat, label = data_prepare(
+            coord,
+            feat,
+            label,
+            self.split,
+            self.voxel_size,
+            # self.voxel_max,
+            None,
+            self.transform,
+            self.shuffle_index,
+            sampled_class,
+        )
+
+        # construct test labels without base class labels
+        feat = torch.cat((coord, feat), dim=1)
+        if support:
+            label = (label == sampled_class).int()
+        else:
+            class_dict = {c: i + 1 for i, c in enumerate(sampled_classes)}
+            for i, lb in enumerate(label):
+                if lb.item() in class_dict.keys():
+                    label[i] = class_dict[lb.item()]
+                else:
+                    label[i] = 0
+
+        return feat, label
+
+    def __len__(self):
+        return len(self.combos)
 
 
 class S3DIS_FS_TEST(Dataset):

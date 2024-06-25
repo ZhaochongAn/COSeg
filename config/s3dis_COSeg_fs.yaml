@@ -76,6 +76,9 @@ Few-shot:
   pretrain_backbone:
   n_subprototypes: 100
   vis: 0
+  forvis: 0
+  vis_save_path:
+  target_class: table
 
 Distributed:
   dist_url: tcp://127.0.0.1:6789

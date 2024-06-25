@@ -20,9 +20,10 @@ import torch.multiprocessing as mp
 import torch.distributed as dist
 import torch.optim.lr_scheduler as lr_scheduler
 from tensorboardX import SummaryWriter
+from functools import partial
 
 from util import config
-from util.s3dis_fs import S3DIS_FS, S3DIS_FS_TEST
+from util.s3dis_fs import S3DIS_FS, S3DIS_FS_TEST, S3DIS_FSForVIS
 from util.scannet_v2_fs import Scannetv2_FS, Scannetv2_FS_TEST
 from util.common_util import (
     AverageMeter,
@@ -256,19 +257,34 @@ def main_worker(gpu, ngpus_per_node, argss):
 
     val_transform = None
     if args.data_name == "s3dis":
-        val_data = S3DIS_FS_TEST(
-            split=args.eval_split,
-            data_root=args.data_root,
-            voxel_size=args.voxel_size,
-            voxel_max=args.voxel_max,
-            transform=val_transform,
-            cvfold=args.cvfold,
-            num_episode=args.num_episode,
-            n_way=args.n_way,
-            k_shot=args.k_shot,
-            n_queries=args.n_queries,
-            num_episode_per_comb=args.num_episode_per_comb,
-        )
+        if args.forvis:
+            val_data = S3DIS_FSForVIS(
+                split="test",
+                data_root=args.data_root,
+                voxel_size=args.voxel_size,
+                voxel_max=args.voxel_max,
+                transform=val_transform,
+                cvfold=args.cvfold,
+                num_episode=args.num_episode,
+                n_way=args.n_way,
+                k_shot=args.k_shot,
+                n_queries=args.n_queries,
+                target_class=args.target_class,
+            )
+        else:
+            val_data = S3DIS_FS_TEST(
+                split=args.eval_split,
+                data_root=args.data_root,
+                voxel_size=args.voxel_size,
+                voxel_max=args.voxel_max,
+                transform=val_transform,
+                cvfold=args.cvfold,
+                num_episode=args.num_episode,
+                n_way=args.n_way,
+                k_shot=args.k_shot,
+                n_queries=args.n_queries,
+                num_episode_per_comb=args.num_episode_per_comb,
+            )
         valid_calsses = list(val_data.classes)
 
     elif args.data_name == "scannetv2":
@@ -291,17 +307,18 @@ def main_worker(gpu, ngpus_per_node, argss):
             "The dataset {} is not supported.".format(args.data_name)
         )
 
-    # main process firstly call, since it will construct the dataset if not exist
-    # and avoid conflicts from other processes
-    if main_process():
-        logger.info(
-            "The main process prepares test data while other processes wait..."
-        )
-        val_data.prepare_test_data()
+    if not args.forvis:
+        # main process firstly call, since it will construct the dataset if not exist
+        # and avoid conflicts from other processes
+        if main_process():
+            logger.info(
+                "The main process prepares test data while other processes wait..."
+            )
+            val_data.prepare_test_data()
 
-    if args.distributed:
-        dist.barrier()
-        val_data.prepare_test_data()
+        if args.distributed:
+            dist.barrier()
+            val_data.prepare_test_data()
 
     if args.distributed:
         val_sampler = torch.utils.data.distributed.DistributedSampler(val_data)
@@ -314,7 +331,9 @@ def main_worker(gpu, ngpus_per_node, argss):
         num_workers=args.workers,
         pin_memory=True,
         sampler=val_sampler,
-        collate_fn=collate_fn_limit_fs,
+        collate_fn=partial(
+            collate_fn_limit_fs, include_scene_names=args.forvis
+        ),
     )
 
     if args.test:
@@ -721,18 +740,37 @@ def validate(val_loader, model, valid_calsses):
     union_meter = AverageMeter()
     target_meter = AverageMeter()
 
+    if args.forvis:
+        target_class = val_loader.dataset.target_class
+        pred_path = os.path.join(args.vis_save_path, target_class)
+        os.makedirs(pred_path, exist_ok=True)
+
     torch.cuda.empty_cache()
     model.eval()
     end = time.time()
-    for i, (
-        support_x,
-        support_y,
-        support_offset,
-        query_x,
-        query_y,
-        query_offset,
-        sampled_classes,
-    ) in enumerate(val_loader):
+    for i, batch in enumerate(val_loader):
+        if args.forvis:
+            (
+                support_x,
+                support_y,
+                support_offset,
+                query_x,
+                query_y,
+                query_offset,
+                sampled_classes,
+                scene_names,
+            ) = batch
+        else:
+            (
+                support_x,
+                support_y,
+                support_offset,
+                query_x,
+                query_y,
+                query_offset,
+                sampled_classes,
+            ) = batch
+
         data_time.update(time.time() - end)
 
         query_y = query_y.cuda(non_blocking=True)
@@ -761,6 +799,33 @@ def validate(val_loader, model, valid_calsses):
         intersection, union, target = evaluate_metric(
             output, query_y, sampled_classes, valid_calsses, args.ignore_label
         )
+
+        if args.forvis:
+            query_name = scene_names[0]
+            support_name = scene_names[1]
+            save_dir = os.path.join(pred_path, f"{query_name}_{support_name}")
+            os.makedirs(save_dir, exist_ok=True)
+            np.save(
+                os.path.join(save_dir, "query.npy"),
+                query_x.cpu().numpy(),
+            )
+            np.save(
+                os.path.join(save_dir, "querylb.npy"),
+                query_y.cpu().numpy(),
+            )
+            np.save(
+                os.path.join(save_dir, "sup.npy"),
+                support_x.cpu().numpy(),
+            )
+            np.save(
+                os.path.join(save_dir, "suplb.npy"),
+                support_y.cpu().numpy(),
+            )
+            np.save(
+                os.path.join(save_dir, "pred.npy"),
+                output.cpu().numpy(),
+            )
+            torch.cuda.empty_cache()
 
         if args.multiprocessing_distributed:
             dist.all_reduce(intersection), dist.all_reduce(

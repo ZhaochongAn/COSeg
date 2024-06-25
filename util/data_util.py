@@ -7,27 +7,45 @@ from util.voxelize import voxelize
 import os
 
 
-def collate_fn_limit_fs(batch):
+def collate_fn_limit_fs(batch, include_scene_names=False):
     """
     :param batch: for episode training, batch size = 1
-    :param logger:
-    :return: sampled_classes: numpy
+    :param include_scene_names: boolean flag to indicate if scene names are included in the batch
+    :return: various concatenated tensors and optionally scene names
     """
-    # [(n,c),...] [(n),..]
-    support_feat, support_label, query_feat, query_label, sampled_classes = (
-        batch[0]
-    )
+    # Unpack batch according to the expected structure
+    if include_scene_names:
+        (
+            support_feat,
+            support_label,
+            query_feat,
+            query_label,
+            sampled_classes,
+            scene_names,
+        ) = batch[0]
+    else:
+        (
+            support_feat,
+            support_label,
+            query_feat,
+            query_label,
+            sampled_classes,
+        ) = batch[0]
+
+    # Compute support offset
     support_offset, count = [], 0
     for item in support_feat:
         count += item.shape[0]
         support_offset.append(count)
 
+    # Compute query offset
     query_offset, count = [], 0
     for item in query_feat:
         count += item.shape[0]
         query_offset.append(count)
 
-    return (
+    # Prepare the return tuple
+    return_tuple = (
         torch.cat(support_feat),
         torch.cat(support_label),
         torch.IntTensor(support_offset),
@@ -36,6 +54,11 @@ def collate_fn_limit_fs(batch):
         torch.IntTensor(query_offset),
         sampled_classes,
     )
+
+    if include_scene_names:
+        return_tuple += (scene_names,)
+
+    return return_tuple
 
 
 def collate_fn_limit_fs_train(batch):
@@ -226,7 +249,6 @@ def data_prepare_v101(
         )
         coord, feat, label = coord[crop_idx], feat[crop_idx], label[crop_idx]
 
-
     if shuffle_index:
         shuf_idx = np.arange(coord.shape[0])
         np.random.shuffle(shuf_idx)
@@ -270,7 +292,6 @@ def data_prepare_vis(
             np.arange(label.shape[0]), voxel_max, replace=False
         )
         coord, feat, label = coord[crop_idx], feat[crop_idx], label[crop_idx]
-
 
     if shuffle_index:
         shuf_idx = np.arange(coord.shape[0])

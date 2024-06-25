@@ -158,11 +158,31 @@ For testing, modify `cvfold`, `n_way`, `k_shot` and `num_episode_per_comb` accor
 ```bash
 python3 main_fs.py --config config/[CONFIG_FILE] test True eval_split test weight [PATH_to_SAVED_MODEL]
 ```
-For visualization, add `vis 1`.
+For visualization in wandb, you could simply add `vis 1`.
 
 Note: It is common to observe fluctuations in the mIoU by approximately 1.0%. This variability may be attributed to the relatively small size of the training set. 
 The variance in performance on ScanNetv2 tends to be smaller compared to S3DIS due to its larger size. Additionally, the mean performance across the two dataset splits is generally more stable than the performance of each split individually.
 
+## Visualization
+To generate the visualizations as in our paper:
+
+1. Save Predicted Results
+    
+    Run the following command to save all related results. You could specify the target class to visualize with `target_class` according to your own interests. The current code supports visulizations for 1-way 1-shot setting on the S3DIS dataset:
+
+    ```bash
+    python3 main_fs.py --config config/[CONFIG_FILE] test True weight [PATH_to_SAVED_MODEL] cvfold [CVFOLD] train_gpu [0] vis_save_path ./vis forvis 1 data_root [PATH_to_DATASET_processed_data]/scenes/data target_class table
+    ```
+
+2. Render Saved Results
+
+    Use Open3D tools (tested on Open3D==0.16.0) to render the saved results:
+
+    ```bash
+    python3 util/visualize.py --targetclass table --vis_path ./vis
+    ```
+
+Since we store labels in the normals attribute as a walkaround for accessing the labels in the PointCloud object, you should press `Ctrl+L` in the rendering window to disable normals for correct color rendering. Our code allows you to crop the scene, adjust the view, resize, and more in the interactive window. Press `Ctrl+P` to save the final image when you find a satisfactory perspective. For more details, see the [Open3D documentation](https://www.open3d.org/docs/0.16.0/python_api/open3d.geometry.PointCloud.html).
 
 # Citation
 If you find this project useful, please consider giving a star :star: and citation &#x1F4DA;:
