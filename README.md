@@ -64,8 +64,8 @@ You can either directly download the preprocessed dataset directly from the link
 ### Preprocessed Datasets
 | Dataset | Download |
 | ------------------ | -------|
-| S3DIS | [Download link](https://drive.google.com/file/d/1faJYS_sulGWdLg-Qlst9oGVKfOxZos4m/view?usp=drive_link) |
-| ScanNet | [Download link](https://drive.google.com/file/d/1mUoITu4_bkucNA-Gl_Y84j0YxD93pHK0/view?usp=drive_link) |
+| S3DIS | [Download link](https://drive.google.com/file/d/1frJ8nf9XLK_fUBG4nrn8Hbslzn7914Ru/view?usp=drive_link) |
+| ScanNet | [Download link](https://drive.google.com/file/d/19yESBZumU-VAIPrBr8aYPaw7UqPia4qH/view?usp=drive_link) |
 
 ### Preprocessing Instructions
 
