@@ -188,10 +188,11 @@ Since we store labels in the normals attribute as a walkaround for accessing the
 If you find this project useful, please consider giving a star :star: and citation &#x1F4DA;:
 
 ```
-@article{an2024rethinking,
+@inproceedings{an2024rethinking,
   title={Rethinking Few-shot 3D Point Cloud Semantic Segmentation},
   author={An, Zhaochong and Sun, Guolei and Liu, Yun and Liu, Fayao and Wu, Zongwei and Wang, Dan and Van Gool, Luc and Belongie, Serge},
-  journal={arXiv preprint arXiv:2403.00592},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={3996--4006},
   year={2024}
 }
 ```
@@ -202,4 +203,4 @@ For any questions or issues, feel free to reach out!
 
 **Communication Group (WeChat)**:
 
-<img src="https://files.mdnice.com/user/67517/c6ebdf31-5614-4982-a84c-46be91b2c26b.png" width="200"/>
+<img src="https://files.mdnice.com/user/67517/95916a7e-425d-48bd-9e16-1c64f3db200c.png" width="200"/>
