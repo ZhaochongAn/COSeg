@@ -205,7 +205,7 @@ For any questions or issues, feel free to reach out!
 
 **Communication Group (WeChat)**:
 
-<div style="text-align: left;">
+<div style="text-align: left; vertical-align: top">
   <img src="https://files.mdnice.com/user/67517/0e3b61e3-08aa-4c42-9cfc-21052641cbfd.png" width="190" style="display: inline-block; vertical-align: top;"/>
   <img src="https://files.mdnice.com/user/67517/8e91de11-2ae0-46c1-b9be-6ce95f24985f.png" width="200" style="display: inline-block; vertical-align: top;"/>
 </div>
