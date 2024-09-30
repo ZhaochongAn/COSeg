@@ -203,7 +203,7 @@ For any questions or issues, feel free to reach out!
 
 **Zhaochong An**: anzhaochong@outlook.com
 
-**Communication Group and Contact (WeChat)**:
+**Communication Group (WeChat)**:
 
 <div style="text-align: left; ">
   <img src="https://files.mdnice.com/user/67517/0e3b61e3-08aa-4c42-9cfc-21052641cbfd.png" width="200" style="display: inline-block; vertical-align: top;"/>
