@@ -213,23 +213,23 @@ class COSeg(nn.Module):
         sampled_classes: Optional[np.array] = None,
     ) -> Tuple[torch.Tensor, torch.Tensor]:
         """
-        Forward pass of the COSEG model.
+        Forward pass of the COSeg model.
 
         Args:
-            support_offset: Offset of each scene in support inputs. Shape (N_way*K_shot).
-            support_x: Support point cloud input with shape (N_support, in_channels).
-            support_y: Support masks with shape (N_support).
-            query_offset: Offset of each scene in support inputs. Shape (N_way).
-            query_x: Query point cloud input with shape (N_query, in_channels).
-            query_y: Query labels with shape (N_query).
-            epoch: Current epoch.
-            support_base_y: Support base class labels with shape (N_support).
-            query_base_y: Query base class labels with shape (N_query).
-            sampled_classes: Sampled classes in current episode. Shape (N_way).
+            support_offset: Offset of each scene in the support set (shape: [N_way*K_shot]).
+            support_x: Support point cloud inputs (shape: [N_support, in_channels]).
+            support_y: Support masks (shape: [N_support]).
+            query_offset: Offset of each scene in the query set (shape: [N_way]).
+            query_x: Query point cloud inputs (shape: [N_query, in_channels]).
+            query_y: Query labels (shape: [N_query]).
+            epoch: Current training epoch.
+            support_base_y: Base class labels in the support set (shape: [N_support]).
+            query_base_y: Base class labels in the query set (shape: [N_query]).
+            sampled_classes: The classes sampled in the current episode (shape: [N_way]).
 
         Returns:
-            query_pred: Predicted class logits for query point clouds. Shape: (1, n_way+1, N_query).
-            loss: Forward loss value.
+            final_pred: Predicted class logits for query point clouds (shape: [1, n_way+1, N_query]).
+            loss: The total loss value for this forward pass.
         """
 
         # get downsampled support features
@@ -327,7 +327,7 @@ class COSeg(nn.Module):
                             self.base_prototypes[class_label - 1] * 0.995
                             + class_features * 0.005
                         )
-            # mask out the base porotype for current target classes which should not be considered as background
+            # mask out base prototypes for current target classes which should not be considered as background
             mask_list = [
                 self.base_class_to_pred_label[base_cls] - 1
                 for base_cls in sampled_classes
