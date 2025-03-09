@@ -2,8 +2,11 @@
 
 *Zhaochong An, Guolei Sun<sup>†</sup>, Yun Liu<sup>†</sup>, Fayao Liu, Zongwei Wu, Dan Wang, Luc Van Gool, Serge Belongie*
 
-Welcome to the official PyTorch implementation repository of our paper [**Rethinking Few-shot 3D Point Cloud Semantic Segmentation**](https://arxiv.org/abs/2403.00592), accepted to CVPR 2024 [\[arXiv\]](https://arxiv.org/abs/2403.00592).
+Welcome to the official PyTorch implementation repository of our paper [**Rethinking Few-shot 3D Point Cloud Semantic Segmentation**](https://openaccess.thecvf.com/content/CVPR2024/papers/An_Rethinking_Few-shot_3D_Point_Cloud_Semantic_Segmentation_CVPR_2024_paper.pdf), accepted to CVPR 2024 [\[Paper\]](https://openaccess.thecvf.com/content/CVPR2024/papers/An_Rethinking_Few-shot_3D_Point_Cloud_Semantic_Segmentation_CVPR_2024_paper.pdf) [\[Bibtex\]](https://scholar.googleusercontent.com/scholar.bib?q=info:EcrukcopoIoJ:scholar.google.com/&output=citation&scisdr=ClEw2htJELWbu3HqFDo:AFWwaeYAAAAAZ8zsDDqqTkwaiqynGE8FunGUob0&scisig=AFWwaeYAAAAAZ8zsDPajQwILsJbd-B5EBfqYXCg&scisf=4&ct=citation&cd=-1&hl=en).
 
+# News :triangular_flag_on_post:
+
+- *2025/03/09*: Our new paper *Multimodality Helps Few-shot 3D Point Cloud Semantic Segmentation* is accepted to **ICLR 2025 as a Spotlight**. Check out the [paper](https://arxiv.org/pdf/2410.22489) and our [repo](https://github.com/ZhaochongAn/Multimodality-3D-Few-Shot) for more details.
 
 # Highlight 
 
@@ -203,9 +206,8 @@ For any questions or issues, feel free to reach out!
 
 **Zhaochong An**: anzhaochong@outlook.com
 
-**Communication Group (WeChat)**:
+**Join the Communication Group (WeChat)**:
 
 <div style="text-align: left; ">
-  <img src="https://files.mdnice.com/user/67517/0e3b61e3-08aa-4c42-9cfc-21052641cbfd.png" width="200" style="display: inline-block; vertical-align: top;"/>
   <img src="https://files.mdnice.com/user/67517/068822c4-cece-4ac5-b1db-5c138a91a718.png" width="200" style="display: inline-block; vertical-align: top;"/>
 </div>
