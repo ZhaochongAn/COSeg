@@ -6,9 +6,11 @@ Welcome to the official PyTorch implementation repository of our paper [**Rethin
 
 # News :triangular_flag_on_post:
 
-- *2025/03/21*: Our new **CVPR 2025** paper, *[Generalized Few-shot 3D Point Cloud Segmentation with Vision-Language Model](https://arxiv.org/pdf/2503.16282)*, is now public. Check out the [GFS-VL paper](https://arxiv.org/pdf/2503.16282) for more details and the code will be released soon in the [GFS-VL repo](https://github.com/ZhaochongAn/GFS-VL).
+- *2023/04/11*: 🔥 **GFS-VL** code is now publicly available! We've released pre-trained model weights and benchmark datasets to facilitate research. Building on the efficient [Pointcept framework](https://github.com/Pointcept/Pointcept), our [GFS-VL repository](https://github.com/ZhaochongAn/GFS-VL) provides **everything you need** to get started with 3D few-shot learning powered by vision-language models.
 
-- *2025/03/09*: Our new paper *[Multimodality Helps Few-shot 3D Point Cloud Semantic Segmentation](https://arxiv.org/pdf/2410.22489)* is accepted to **ICLR 2025 as a Spotlight**. Check out the [paper](https://arxiv.org/pdf/2410.22489) and our [repo](https://github.com/ZhaochongAn/Multimodality-3D-Few-Shot) for more details.
+- *2023/03/21*: 📣 Our **CVPR 2023** paper *[Generalized Few-shot 3D Point Cloud Segmentation with Vision-Language Model](https://arxiv.org/pdf/2503.16282)* is now available! Read the [full paper](https://arxiv.org/pdf/2503.16282) for efficient 3D few-shot learning with vision-language models. Code will be released in our [GFS-VL repository](https://github.com/ZhaochongAn/GFS-VL).
+
+- *2023/03/09*: 🏆 Our paper *[Multimodality Helps Few-shot 3D Point Cloud Semantic Segmentation](https://arxiv.org/pdf/2410.22489)* has been accepted to **ICLR 2023 as a Spotlight presentation**! Check out the [paper](https://arxiv.org/pdf/2410.22489) and our [implementation repository](https://github.com/ZhaochongAn/Multimodality-3D-Few-Shot) for more details.
 
 # Highlight 
 
