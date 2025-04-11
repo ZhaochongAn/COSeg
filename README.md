@@ -6,7 +6,7 @@ Welcome to the official PyTorch implementation repository of our paper [**Rethin
 
 # News :triangular_flag_on_post:
 
-- *2023/04/11*: 🔥 **GFS-VL** code is now publicly available! We've released pre-trained model weights and benchmark datasets to facilitate research. Building on the efficient [Pointcept framework](https://github.com/Pointcept/Pointcept), our [GFS-VL repository](https://github.com/ZhaochongAn/GFS-VL) provides **everything you need** to get started with 3D few-shot learning powered by vision-language models.
+- *2023/04/11*: 🔥 **GFS-VL** code is now publicly available! We've released pre-trained model weights and benchmark datasets to facilitate research. Building on the efficient [Pointcept codebase](https://github.com/Pointcept/Pointcept), our [GFS-VL repository](https://github.com/ZhaochongAn/GFS-VL) provides **everything you need** to get started with 3D few-shot learning powered by vision-language models.
 
 - *2023/03/21*: 📣 Our **CVPR 2025** paper *[Generalized Few-shot 3D Point Cloud Segmentation with Vision-Language Model](https://arxiv.org/pdf/2503.16282)* is now available! Read the [full paper](https://arxiv.org/pdf/2503.16282) for efficient 3D few-shot learning with vision-language models. Code will be released in our [GFS-VL repository](https://github.com/ZhaochongAn/GFS-VL).
 
