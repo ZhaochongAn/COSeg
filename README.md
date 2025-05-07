@@ -12,7 +12,7 @@ Welcome to the official PyTorch implementation repository of our paper [**Rethin
 
 - *2023/03/09*: 🏆 Our paper *[Multimodality Helps Few-shot 3D Point Cloud Semantic Segmentation](https://arxiv.org/pdf/2410.22489)* has been accepted to **ICLR 2025 as a Spotlight presentation**! Check out the [paper](https://arxiv.org/pdf/2410.22489) and our [implementation repository](https://github.com/ZhaochongAn/Multimodality-3D-Few-Shot) for more details.
 
-# Highlight 
+## Highlight 
 
 ### The first thing we want you to be aware from this paper: 
 <p align="center"><i>please ensure you are using our <strong>corrected setting</strong> for the development and evaluation of your 3D few-shot models</i>.</p>
@@ -32,7 +32,35 @@ Welcome to the official PyTorch implementation repository of our paper [**Rethin
 3. **Novel Method (*COSeg*)**: Our method introduces **a novel correlation optimization paradigm**, diverging from the traditional feature optimization approach used by all previous *FS-PCS* models. COSeg achieves state-of-the-art performance on both S3DIS and ScanNetv2 datasets, demonstrating effective contextual learning and background correlation adjustment ability.
 
 
-# Get Started
+## 📝 Citation
+If you find this project useful, please consider giving a star :star: and citation &#x1F4DA;:
+
+```bibtex
+@inproceedings{an2025generalized,
+  title={Generalized Few-shot 3D Point Cloud Segmentation with Vision-Language Model},
+  author={An, Zhaochong and Sun, Guolei and Liu, Yun and Li, Runjia and Han, Junlin and Konukoglu, Ender and Belongie, Serge},
+  booktitle={CVPR},
+  year={2025}
+}
+
+@inproceedings{an2024multimodality,
+    title={Multimodality Helps Few-Shot 3D Point Cloud Semantic Segmentation},
+    author={An, Zhaochong and Sun, Guolei and Liu, Yun and Li, Runjia and Wu, Min 
+            and Cheng, Ming-Ming and Konukoglu, Ender and Belongie, Serge},
+    booktitle={ICLR},
+    year={2025}
+}
+
+@inproceedings{an2024rethinking,
+  title={Rethinking Few-shot 3D Point Cloud Semantic Segmentation},
+  author={An, Zhaochong and Sun, Guolei and Liu, Yun and Liu, Fayao and Wu, Zongwei and Wang, Dan and Van Gool, Luc and Belongie, Serge},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={3996--4006},
+  year={2024}
+}
+```
+---
+
 
 ## Environment
 The following environment setup instructions have been tested on RTX 3090 GPUs with GCC 6.3.0.
@@ -193,33 +221,8 @@ To generate the visualizations as in our paper:
 
 Since we store labels in the normals attribute as a walkaround for accessing the labels in the PointCloud object, you should press `Ctrl+L` in the rendering window to disable normals for correct color rendering. Our code allows you to crop the scene, adjust the view, resize, and more in the interactive window. Press `Ctrl+P` to save the final image when you find a satisfactory perspective. For more details, see the [Open3D documentation](https://www.open3d.org/docs/0.16.0/python_api/open3d.geometry.PointCloud.html).
 
-# Citation
-If you find this project useful, please consider giving a star :star: and citation &#x1F4DA;:
 
-```
-@inproceedings{an2025generalized,
-  title={Generalized Few-shot 3D Point Cloud Segmentation with Vision-Language Model},
-  author={An, Zhaochong and Sun, Guolei and Liu, Yun and Li, Runjia and Han, Junlin and Konukoglu, Ender and Belongie, Serge},
-  booktitle={CVPR},
-  year={2025}
-}
-
-@inproceedings{an2024multimodality,
-    title={Multimodality Helps Few-Shot 3D Point Cloud Semantic Segmentation},
-    author={An, Zhaochong and Sun, Guolei and Liu, Yun and Li, Runjia and Wu, Min 
-            and Cheng, Ming-Ming and Konukoglu, Ender and Belongie, Serge},
-    booktitle={ICLR},
-    year={2025}
-}
-
-@inproceedings{an2024rethinking,
-  title={Rethinking Few-shot 3D Point Cloud Semantic Segmentation},
-  author={An, Zhaochong and Sun, Guolei and Liu, Yun and Liu, Fayao and Wu, Zongwei and Wang, Dan and Van Gool, Luc and Belongie, Serge},
-  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-  pages={3996--4006},
-  year={2024}
-}
-```
+## Contact
 
 For any questions or issues, feel free to reach out!
 
