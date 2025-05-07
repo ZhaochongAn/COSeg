@@ -197,6 +197,21 @@ Since we store labels in the normals attribute as a walkaround for accessing the
 If you find this project useful, please consider giving a star :star: and citation &#x1F4DA;:
 
 ```
+@inproceedings{an2025generalized,
+  title={Generalized Few-shot 3D Point Cloud Segmentation with Vision-Language Model},
+  author={An, Zhaochong and Sun, Guolei and Liu, Yun and Li, Runjia and Han, Junlin and Konukoglu, Ender and Belongie, Serge},
+  booktitle={CVPR},
+  year={2025}
+}
+
+@inproceedings{an2024multimodality,
+    title={Multimodality Helps Few-Shot 3D Point Cloud Semantic Segmentation},
+    author={An, Zhaochong and Sun, Guolei and Liu, Yun and Li, Runjia and Wu, Min 
+            and Cheng, Ming-Ming and Konukoglu, Ender and Belongie, Serge},
+    booktitle={ICLR},
+    year={2025}
+}
+
 @inproceedings{an2024rethinking,
   title={Rethinking Few-shot 3D Point Cloud Semantic Segmentation},
   author={An, Zhaochong and Sun, Guolei and Liu, Yun and Liu, Fayao and Wu, Zongwei and Wang, Dan and Van Gool, Luc and Belongie, Serge},
