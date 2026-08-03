@@ -37,26 +37,31 @@ If you find this project useful, please consider giving a star :star: and citati
 
 ```bibtex
 @inproceedings{an2025generalized,
-  title={Generalized Few-shot 3D Point Cloud Segmentation with Vision-Language Model},
+  title={Generalized few-shot 3d point cloud segmentation with vision-language model},
   author={An, Zhaochong and Sun, Guolei and Liu, Yun and Li, Runjia and Han, Junlin and Konukoglu, Ender and Belongie, Serge},
-  booktitle={CVPR},
+  booktitle={2025 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  pages={16997--17007},
+  year={2025},
+  organization={IEEE}
+}
+
+@inproceedings{an2025multimodality,
+  title={Multimodality helps few-shot 3d point cloud semantic segmentation},
+  author={An, Zhaochong and Sun, Guolei and Liu, Yun and Li, Runjia and Wu, Min and Cheng, Ming-Ming and Konukoglu, Ender and Belongie, Serge},
+  booktitle={International Conference on Learning Representations},
+  volume={2025},
+  pages={55414--55435},
   year={2025}
 }
 
-@inproceedings{an2024multimodality,
-    title={Multimodality Helps Few-Shot 3D Point Cloud Semantic Segmentation},
-    author={An, Zhaochong and Sun, Guolei and Liu, Yun and Li, Runjia and Wu, Min 
-            and Cheng, Ming-Ming and Konukoglu, Ender and Belongie, Serge},
-    booktitle={ICLR},
-    year={2025}
-}
 
 @inproceedings{an2024rethinking,
-  title={Rethinking Few-shot 3D Point Cloud Semantic Segmentation},
+  title={Rethinking few-shot 3d point cloud semantic segmentation},
   author={An, Zhaochong and Sun, Guolei and Liu, Yun and Liu, Fayao and Wu, Zongwei and Wang, Dan and Van Gool, Luc and Belongie, Serge},
-  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  booktitle={2024 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
   pages={3996--4006},
-  year={2024}
+  year={2024},
+  organization={IEEE}
 }
 ```
 ---
